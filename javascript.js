@@ -38,11 +38,16 @@ const game = (function () {
             let player1NameInput = document.querySelector('.one.name')
             let player2NameInput = document.querySelector('.two.name')
             player1name = player1NameInput.value
+            if (player1name === '' || player1name === null) {
+                player1name = 'Player 1'
+            }
             player2name = player2NameInput.value
-            console.log(player1name)
-            console.log(player2name)
+            if (player2name === '' || player2name === null) {
+                player2name = 'Player 2'
+            }
             player1 = createPlayer(player1name)
             player2 = createPlayer(player2name)
+            displayManager.showGame()
         })
 
         function createPlayer (playerName) {
@@ -93,6 +98,9 @@ const game = (function () {
 
 
     const displayManager = (function () {
+        function showGame() {
+            console.log('gamehsowowiefweiofne')
+        }
 
         //event listeners for initial + tutorial buttons
         let tutorialBtn = document.querySelector('.tutorial-button')
