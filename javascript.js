@@ -9,13 +9,6 @@ declare private roundScore and roundTime vars with getters
 */
 
 /*
-PLAYER MANAGER IIFE
-Factory Function for player, make 2 players with name const, score vars, roundScore vars, roundTime vars
-event listener for submit button of player names triggers selection of first player
-event listener for both player icons, whichever clicked goes first
-*/
-
-/*
 DISPLAY MANAGER IIFE
 WhoGoesFirst method adjusts ui for selection of first player
 Upon selection, show game content and set firstPlayer var to selected player
@@ -99,7 +92,14 @@ const game = (function () {
 
     const displayManager = (function () {
         function showGame() {
-            console.log('gamehsowowiefweiofne')
+            initial.classList.add('hidden')
+            let content = document.querySelector('content')
+            let game = document.createElement('div')
+            game.classList.add('game')
+            let numpad = document.createElement('div')
+            numpad.classList.add('numpad')
+            game.appendChild(numpad)
+            content.appendChild(game)
         }
 
         //event listeners for initial + tutorial buttons
@@ -117,6 +117,8 @@ const game = (function () {
             tutorialBtn.classList.remove('hidden')
             tutorial.classList.add('hidden')
         })
+
+        return {showGame}
     })();
 
     return {gameManager, playerManager, displayManager}
