@@ -45,6 +45,7 @@ const game = (function () {
             get timeTaken() {
                 return timeTaken
             }
+        }
     })();
 
 
@@ -122,22 +123,32 @@ const game = (function () {
             let numpad = document.createElement('div')
             numpad.classList.add('numpad')
             let iconArr = [
-    
+                './assets/seven.png', './assets/eight.png', './assets/nine.png',
+                './assets/four.png', './assets/five.png', './assets/six.png',
+                './assets/one.png', './assets/two.png', './assets/three.png',
+                './assets/backspace.png', './assets/zero.png', './assets/submit.png'
             ]
-            iconArr.forEach(src, index) {
+            iconArr.forEach((src, index) => {
                 let numpadBtn = document.createElement('button')
                 if (index === 9) {
                     numpadBtn.dataset.action = 'backspace'
+                    console.log('this is backspace')
                 } else if (index === 11) {
                     numpadBtn.dataset.action = 'submit'
+                    console.log('this is submit')
                 } else {
                     numpadBtn.dataset.number = (index+1)
+                    console.log('this is '+numpadBtn.dataset.number)
                 }
                 let icon = document.createElement('img')
                 icon.src = src
+                numpadBtn.classList.add('numpadBtn')
+                icon.classList.add('numpadBtn-icon')
                 numpadBtn.appendChild(icon)
                 numpad.appendChild(numpadBtn)
-            }
+            })
+            game.appendChild(numpad)
+            content.appendChild(game)
         }
 
         let instruction = document.querySelector('.instruction')
@@ -161,7 +172,7 @@ const game = (function () {
             tutorial.classList.add('hidden')
         })
 
-        return {showGame}
+        return {showGame, updateInstruction}
     })();
 
     return {gameManager, playerManager, displayManager}

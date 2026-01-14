@@ -186,19 +186,31 @@ header {
     background-color: rgb(241, 241, 241);
 }
 
+
 .game {
     display: grid;
     margin: 0 auto;
+    padding: 1rem 2rem;
     grid-template-columns: 2fr 3fr;
     grid-template-rows: 1fr 3fr;
-    background-color: greenyellow;
 }
 
 .numpad {
     grid-column: 1;
     grid-row: 1/3;
-    background-color: red;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 7.5rem);
+    grid-template-rows: repeat(4, 7.5rem);
+}
+
+.numpadBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0.5rem solid rgb(187, 187, 187);
+}
+
+.numpadBtn-icon {
+    width: 7rem;
+    height: 7rem;
 }
