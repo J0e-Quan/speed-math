@@ -121,8 +121,23 @@ const game = (function () {
             game.classList.add('game')
             let numpad = document.createElement('div')
             numpad.classList.add('numpad')
-            game.appendChild(numpad)
-            content.appendChild(game)
+            let iconArr = [
+    
+            ]
+            iconArr.forEach(src, index) {
+                let numpadBtn = document.createElement('button')
+                if (index === 9) {
+                    numpadBtn.dataset.action = 'backspace'
+                } else if (index === 11) {
+                    numpadBtn.dataset.action = 'submit'
+                } else {
+                    numpadBtn.dataset.number = (index+1)
+                }
+                let icon = document.createElement('img')
+                icon.src = src
+                numpadBtn.appendChild(icon)
+                numpad.appendChild(numpadBtn)
+            }
         }
 
         let instruction = document.querySelector('.instruction')
@@ -151,6 +166,7 @@ const game = (function () {
 
     return {gameManager, playerManager, displayManager}
 })();
+
 
 
 
