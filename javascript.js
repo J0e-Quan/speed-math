@@ -25,6 +25,10 @@ const game = (function () {
         let timeTaken = 0
         let startTime = 0
         let endTime = 0
+        let isPlayer1Turn = true
+        function toggleIsPlayer1Turn() {
+            isPlayer1Turn = !isPlayer1Turn
+        }
         function incrementScore() {
             currentScore = currentScore++
         }
@@ -44,7 +48,11 @@ const game = (function () {
             },
             get timeTaken() {
                 return timeTaken
-            }
+            },
+            get isPlayer1Turn() {
+                return isPlayer1Turn
+            },
+            toggleIsPlayer1Turn
         }
     })();
 
@@ -116,6 +124,7 @@ const game = (function () {
 
     const displayManager = (function () {
         function showGame() {
+            tutorialBtn.classList.add('hidden')
             initial.classList.add('hidden')
             let content = document.querySelector('.content')
             let game = document.createElement('div')
@@ -132,13 +141,10 @@ const game = (function () {
                 let numpadBtn = document.createElement('button')
                 if (index === 9) {
                     numpadBtn.dataset.action = 'backspace'
-                    console.log('this is backspace')
                 } else if (index === 11) {
                     numpadBtn.dataset.action = 'submit'
-                    console.log('this is submit')
                 } else {
                     numpadBtn.dataset.number = (index+1)
-                    console.log('this is '+numpadBtn.dataset.number)
                 }
                 let icon = document.createElement('img')
                 icon.src = src
@@ -148,7 +154,33 @@ const game = (function () {
                 numpad.appendChild(numpadBtn)
             })
             game.appendChild(numpad)
+            let questionBox = document.createElement('div')
+            questionBox.classList.add('questionBox')
+            questionBox.textContent = '1 + 1 = 11'
+            game.appendChild(questionBox)
+            let currentPlayerInfo = document.createElement('div')
+            currentPlayerInfo.classList.add('currentPlayerInfo')
+            let currentPlayerNameText = document.createElement('h2')
+            currentPlayerNameText.classList.add('currentPlayerNameText')
+            if (gameManager.isPlayer1Turn === true) {
+                currentPlayerNameText.textContent = "It's " + playerManager.player1.name + "'s turn!"
+            } else if (gameManager.isPlayer1Turn === false) {
+                currentPlayerNameText.textContent = "It's " + playerManager.player2.name + "'s turn!"
+            }
+            currentPlayerInfo.appendChild(currentPlayerNameText)
+            let currentPlayerIcon = document.createElement('div')
+            currentPlayerIcon.classList.add('player', 'info', 'icon')
+            currentPlayerIcon.innerHTML =   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 8 8" width="15rem"><path d="M0 6 6 6C6 5 6 4 5 4L3 4C4 4 5 3 5 2 5 1 4 0 3 0 2 0 1 1 1 2 1 3 2 4 3 4L1 4C0 4 0 5 0 6 Z" stroke="#a7a7a7" stroke-width="0"/></svg>'
+            if (gameManager.isPlayer1Turn === true) {
+                currentPlayerIcon.classList.add('one')
+                console.log(currentPlayerIcon.classList)
+            } else if (gameManager.isPlayer1Turn === false) {
+                currentPlayerIcon.classList.add('two')
+            }
+            currentPlayerInfo.appendChild(currentPlayerIcon)
+            game.appendChild(currentPlayerInfo)
             content.appendChild(game)
+            updateInstruction('Input the answer as fast as you can!')
         }
 
         let instruction = document.querySelector('.instruction')
