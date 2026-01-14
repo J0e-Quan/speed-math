@@ -397,6 +397,7 @@ const game = (function () {
         function detectNumpadInput() {
             let numpad = document.querySelector('.numpad')
             let questionBox = document.querySelector('.questionBox')
+            //event listener for clicking/touching the numpad
             numpad.addEventListener('click', (btn) => {
                 let targetBtn = btn.target
                 if (targetBtn.dataset.action === 'submit') {
@@ -408,6 +409,23 @@ const game = (function () {
                     }
                 } else {
                     questionBox.textContent = questionBox.textContent + targetBtn.dataset.action
+                }
+            })
+            //event listener for keyboard input 
+            window.addEventListener('keydown', (press) => {
+                if (press.repeat === true) {
+                    return
+                }
+                if (press.key >= '0' && press.key <= '9') {
+                    let value = Number(press.key)
+                    questionBox.textContent = questionBox.textContent + value
+                } else if (press.key === 'Backspace') {
+                    if (questionBox.textContent.length > questionLength) {
+                        questionBox.textContent = questionBox.textContent.slice(0, -1)
+                    }                    
+                } else if (press.key === 'Enter') {
+                    let inputAnswer = questionBox.textContent.slice(questionLength)
+                    gameManager.checkAnswer(inputAnswer)                    
                 }
             })
         }
