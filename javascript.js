@@ -1,24 +1,3 @@
-/*
-GAME MANAGER IIFE
-method for randomly generating question (FORMAT: x (+ or -) y = ?)
-getStartTime method that runs performance.now()
-getEndTime method that runs performance.now()
-calcRoundTime that takes endTime - startTime
-addRoundScore that increments roundScore
-declare private roundScore and roundTime vars with getters
-*/
-
-/*
-DISPLAY MANAGER IIFE
-WhoGoesFirst method adjusts ui for selection of first player
-Upon selection, show game content and set firstPlayer var to selected player
-For main gameplay, show current player details, number of questions and current question
-Trigger GameManager to get timeStart with performance.now()
-Upon game end, remove everything and show results screen with current player score and time and next player darkened 
-Repeat for next player...
-Once both rounds done, results screen shows winner and score
-event listener for button to play again
-*/
 const game = (function () {
     const gameManager = (function() {
         let currentScore = 0
@@ -314,6 +293,7 @@ const game = (function () {
 
     return {gameManager, playerManager, displayManager}
 })();
+
 
 
 
