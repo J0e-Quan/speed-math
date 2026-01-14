@@ -114,10 +114,6 @@ const game = (function () {
         })
 
         function determineWinner() {
-            console.log('p1 score: '+player1.roundScore)
-            console.log('p2 score: '+player2.roundScore)
-            console.log('p1 time: '+player1.roundTime)
-            console.log('p2 time: '+player1.roundTime)
             if (player1.roundScore > player2.roundScore) {
                 return 'player1'
             } else if (player1.roundScore < player2.roundScore) {
@@ -186,6 +182,7 @@ const game = (function () {
             newGame()
         }
         function newGame() {
+            window.removeEventListener('keydown', detectKeyboardInput)
             let content = document.querySelector('.content')
             let game = document.createElement('div')
             game.classList.add('game')
@@ -250,10 +247,10 @@ const game = (function () {
             }
             currentPlayerInfo.appendChild(scoreGrid)
             content.appendChild(game)
-            detectNumpadInput()
             updateInstruction('Input the answer as fast as you can!')
             gameManager.getStartTime()
-            gameManager.newQuestion()
+            gameManager.newQuestion()            
+            detectNumpadInput()
         }
 
         function removeGame() {
@@ -337,17 +334,17 @@ const game = (function () {
             if (winner === 'player1') {
                 let winResults = document.querySelector('.playerResults.one')
                 winResults.classList.add('winner')
-                updateInstruction(playerManager.player1.name + ' wins!')
+                updateInstruction(playerManager.player1.name + ' wins! Refresh the page or click the logo to play again...')
             } else if (winner === 'player2') {
                 let winResults = document.querySelector('.playerResults.two')
                 winResults.classList.add('winner')
-                updateInstruction(playerManager.player2.name + ' wins!')
+                updateInstruction(playerManager.player2.name + ' wins! Refresh the page or click the logo to play again...')
             } else if (winner === 'tie') {
                 let winResults = document.querySelectorAll('.playerResults')
                 winResults.forEach(element => {
                     element.classList.add('winner')
                 })               
-                updateInstruction("It's a tie!")
+                updateInstruction("It's a tie! Refresh the page or click the logo to play again...")
             }
         }
 
@@ -412,22 +409,7 @@ const game = (function () {
                 }
             })
             //event listener for keyboard input 
-            window.addEventListener('keydown', (press) => {
-                if (press.repeat === true) {
-                    return
-                }
-                if (press.key >= '0' && press.key <= '9') {
-                    let value = Number(press.key)
-                    questionBox.textContent = questionBox.textContent + value
-                } else if (press.key === 'Backspace') {
-                    if (questionBox.textContent.length > questionLength) {
-                        questionBox.textContent = questionBox.textContent.slice(0, -1)
-                    }                    
-                } else if (press.key === 'Enter') {
-                    let inputAnswer = questionBox.textContent.slice(questionLength)
-                    gameManager.checkAnswer(inputAnswer)                    
-                }
-            })
+            window.addEventListener('keydown', detectKeyboardInput)
         }
 
         function detectNextRound() {
@@ -437,6 +419,24 @@ const game = (function () {
                 gameManager.newRound()
                 newGame()
             })
+        }
+
+        function detectKeyboardInput(press) {
+            let questionBox = document.querySelector('.questionBox')
+            if (press.repeat) {
+                return
+            }
+            if (press.key >= '0' && press.key <= '9') {
+                let value = Number(press.key)
+                questionBox.textContent = questionBox.textContent + value
+            } else if (press.key === 'Backspace') {
+                if (questionBox.textContent.length > questionLength) {
+                    questionBox.textContent = questionBox.textContent.slice(0, -1)
+                }                    
+            } else if (press.key === 'Enter') {
+                let inputAnswer = questionBox.textContent.slice(questionLength)
+                gameManager.checkAnswer(inputAnswer)                    
+            }
         }
 
         return {hideInitial, newGame, transition, showResult, updateInstruction, updateScoreIcon, showQuestion}

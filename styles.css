@@ -318,7 +318,7 @@ header {
     padding: 1rem 1rem;
     display: grid;
     grid-template-columns: 1fr 4fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 2fr 1fr 1fr;
     gap: 1rem;
     background-color: rgb(187, 187, 187);
     border-radius: 2rem;
