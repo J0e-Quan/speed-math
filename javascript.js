@@ -92,7 +92,7 @@ const game = (function () {
 
     const displayManager = (function () {
         function showGame() {
-            initial.classList.add('hidden')
+            initial.remove()
             let content = document.querySelector('content')
             let game = document.createElement('div')
             game.classList.add('game')
@@ -100,6 +100,7 @@ const game = (function () {
             numpad.classList.add('numpad')
             game.appendChild(numpad)
             content.appendChild(game)
+            //appendchild game isn't working for some reason :(
         }
 
         //event listeners for initial + tutorial buttons
