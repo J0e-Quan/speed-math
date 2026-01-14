@@ -7,9 +7,11 @@ const game = (function () {
         let isPlayer1Turn = true
         let answer
         let question = 0
-        function toggleIsPlayer1Turn() {
+        function newRound() {
             isPlayer1Turn = !isPlayer1Turn
             question = 0
+            currentScore = 0
+            timeTaken = 0
         }
         function incrementScore() {
             currentScore++
@@ -83,7 +85,7 @@ const game = (function () {
             get isPlayer1Turn() {
                 return isPlayer1Turn
             },
-            toggleIsPlayer1Turn,
+            newRound,
             newQuestion,
             getStartTime,
             getEndTime,
@@ -112,7 +114,23 @@ const game = (function () {
         })
 
         function determineWinner() {
-
+            console.log('p1 score: '+player1.roundScore)
+            console.log('p2 score: '+player2.roundScore)
+            console.log('p1 time: '+player1.roundTime)
+            console.log('p2 time: '+player1.roundTime)
+            if (player1.roundScore > player2.roundScore) {
+                return 'player1'
+            } else if (player1.roundScore < player2.roundScore) {
+                return 'player2'
+            } else if (player1.roundScore === player2.roundScore) {
+                if (player1.roundTime < player2.roundTime) {
+                    return 'player1'
+                } else if (player1.roundTime > player2.roundTime) {
+                    return 'player2'
+                } else if (player1.roundTime === player2.roundTime) {
+                    return 'tie'
+                }
+            }
         }
 
         function createPlayer (playerName) {
@@ -295,6 +313,7 @@ const game = (function () {
                 playerResults.appendChild(playerTime)
                 resultsCard.appendChild(playerResults)
                 if (showPlayer1Results === true) {
+                    playerResults.classList.add('one')
                     playerName.textContent = playerManager.player1.name
                     playerIcon.classList.add('one')
                     playerScore.textContent = 'Correct answers: ' + playerManager.player1.roundScore
@@ -302,6 +321,7 @@ const game = (function () {
                     showPlayer1Results = !showPlayer1Results
                     continue
                 } else if (showPlayer1Results === false) {
+                    playerResults.classList.add('two')
                     playerName.textContent = playerManager.player2.name
                     playerIcon.classList.add('two')
                     playerScore.textContent = 'Correct answers: ' + playerManager.player2.roundScore
@@ -310,7 +330,25 @@ const game = (function () {
                 }
             }
             content.appendChild(resultsCard)
-            playerManager.determineWinner()
+            showWinner(playerManager.determineWinner())
+        }
+
+        function showWinner(winner) {
+            if (winner === 'player1') {
+                let winResults = document.querySelector('.playerResults.one')
+                winResults.classList.add('winner')
+                updateInstruction(playerManager.player1.name + ' wins!')
+            } else if (winner === 'player2') {
+                let winResults = document.querySelector('.playerResults.two')
+                winResults.classList.add('winner')
+                updateInstruction(playerManager.player2.name + ' wins!')
+            } else if (winner === 'tie') {
+                let winResults = document.querySelectorAll('.playerResults')
+                winResults.forEach(element => {
+                    element.classList.add('winner')
+                })               
+                updateInstruction("It's a tie!")
+            }
         }
 
         let instruction = document.querySelector('.instruction')
@@ -378,7 +416,7 @@ const game = (function () {
             let transitionButton = document.querySelector('.transitionButton')
             transitionButton.addEventListener('click', () => {
                 removeTransition()
-                gameManager.toggleIsPlayer1Turn()
+                gameManager.newRound()
                 newGame()
             })
         }
@@ -388,9 +426,3 @@ const game = (function () {
 
     return {gameManager, playerManager, displayManager}
 })();
-
-
-
-
-
-

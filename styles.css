@@ -315,7 +315,7 @@ header {
 }
 
 .playerResults {
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 1fr 1fr 1fr;
@@ -340,11 +340,23 @@ header {
 .playerScore {
     grid-column: 2;
     grid-row: 2;
-    font-size: 3rem;
+    font-size: 2.5rem;
 }
 
 .playerTime {
     grid-column: 2;
     grid-row: 3;
-    font-size: 3rem;
+    font-size: 2.5rem;
+}
+
+.winner {
+    border-color: yellow;
+}
+
+.winner .icon {
+    stroke: yellow;
+}
+
+.winner .playerName {
+    color: yellow;
 }
