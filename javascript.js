@@ -120,7 +120,7 @@ const game = (function () {
             }
             player1 = createPlayer(player1name)
             player2 = createPlayer(player2name)
-            displayManager.showGame()
+            displayManager.hideInitial()
         })
 
         function createPlayer (playerName) {
@@ -171,9 +171,12 @@ const game = (function () {
 
 
     const displayManager = (function () {
-        function showGame() {
+        function hideInitial() {
             tutorialBtn.classList.add('hidden')
             initial.classList.add('hidden')
+            showGame()
+        }
+        function showGame() {
             let content = document.querySelector('.content')
             let game = document.createElement('div')
             game.classList.add('game')
@@ -311,6 +314,7 @@ const game = (function () {
 
     return {gameManager, playerManager, displayManager}
 })();
+
 
 
 
